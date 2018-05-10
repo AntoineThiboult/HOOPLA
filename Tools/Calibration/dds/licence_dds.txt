@@ -1,0 +1,25 @@
+Copyright Bryan A. Tolson; this program/code may not be reproduced for *sale* or for use in 
+part of another code for *sale* without the express written permission of Bryan A. Tolson.
+
+Licence information:  http://www.gnu.org/licenses/gpl.txt
+
+This DDS algorithm implementation is free for public use and you are free to redistribute it.  
+However, the user needs to reference the use of this program in any papers/reports/articles 
+which have results obtained from the use of this program.  I would also appreciate a copy of 
+such papers/articles/reports, or at least an e-mail message with the reference so I can get 
+a copy.
+
+Please report to me any bugs you find in this code.
+
+For companies wishing to link this optimization code with an existing simulation model 
+generating objective/constraint values, I am available for some consulting work.  I suggest 
+users alter this code as little as possible to make future updates I make to DDS easier to 
+incorporate.
+
+DISCLAIMER:  this program is not guaranteed to be free of error (although it is believed to 
+be free of error).  This software is provided 'AS IS', without warranty of any kind, 
+expressed or implied, including but not limited to the warranties of merchantability, fitness 
+for a particular purpose and noninfringement. In no event shall the authors or copyright 
+holders be liable for any claim, damages or other liability, whether in an action of contract, 
+tort of otherwise, arising from, out or in connection with the software or the use or other 
+dealings in the software.

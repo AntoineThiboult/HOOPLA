@@ -1,0 +1,318 @@
+function [Result, DataSim, varargout] = simulation(Switches, DataSim, DataPath, iC, iM, iE, iS, varargin)
+%
+% function [Result, DataSim, SarResult] = simulation(Switches, DataSim, DataPath, iC, iM, iE, DataWu)
+%
+% Inputs:
+%
+%   Switches.
+%       PET_comput      = 0 for provided PET (E in Data) ; 1 for external computation
+%       Snowmelt_comput = 0 for no snowmelt ; 1 for needed snowmelt computation
+%       Warm_up         = 0 for no warm-up ; 1 for needed warm-up (5 times mean Precip year)
+%       ... (see launch_Hoopla for all Switches)
+%   DataSim.
+%       Date    = Simulated dates (yyyy/mm/dd/hh:mm:ss)
+%       Q       = Observed streamfow (matrix size: nDay x 1)%
+%       T       = Mean temperature (°C)
+%       ... (see Doc/Hoopla_Manual for all fields)
+%   DataPath.
+%       dataObsPath     = Data file name (ex : 'Data.mat') path
+%       modelParamBound = model parameter boundaries path
+%       snowModelParamBound = snow model parameter boundaries path
+%   iC     = catchment number
+%   iM     = model number
+%   iE     = potential evapotranspiration formula number
+%   DataWu = Data for warm up
+%
+%
+% Outputs: 
+%
+%   Results.
+%       Qs        = Simulated streamflow
+%       DateFcast = Date matrix      
+%   DataSim.
+%       Date    = Simulated dates (yyyy/mm/dd/hh:mm:ss)
+%       Q       = Observed streamfow (matrix size: nDay x 1)
+%       E       = Potential evapotranspiration (mm). Note that the potential
+%                 evapotranspiration may be computed but doesn't appear in
+%                 the Result structure. It is treated as a data.
+%       T       = Mean temperature (°C)
+%       ... (see Doc/Hoopla_Manual for all fields)
+%       Note that the suffix RP can be added to any value to denote random
+%       perturbations
+%   SarResult.
+%       runoffD  = runoff depth, ie runoff including snowmelt
+%       Pg       = sarModel's solid precipitations (mm)
+%       Pl       = sarModel's liquid precipitations (mm)
+%       G        = sarModel's snowpack (mm)
+%       snowMelt = sarModel's snowmelt (°C)
+%
+% Programmed by A. Thiboult (2016)
+
+%#ok<*RHSFN> Code analyser doesn't recognize handles
+
+%% Load calibrated parameters
+load(DataPath.modelParam)
+try
+    modelParam=Bestxs.(sprintf('Bestx_%s',Switches.nameC{iC})).(Switches.nameM{iM,1});
+catch
+    error('No calibrated parameters available for catchment %s and model %s. Consider performing calibration.',...
+        Switches.nameC{iC},Switches.nameM{iM,1})
+end
+
+%% Function handles
+iniHydroModel=str2func(strcat('ini_',Switches.nameM{iM,1}));  % handle of the function ini_model iM
+hydroModel=str2func(Switches.nameM{iM,1});                    % handle of the function model iM
+if Switches.petCompute.on == 1
+    iniPetModel=str2func(strcat('ini_',Switches.nameE{iE}));    % handle of the function ini_PET iE
+    petModel=str2func(Switches.nameE{iE});                      % handle of the function PET iE
+else 
+    iniPetModel = [];
+    petModel = [];
+end
+if Switches.snowmeltCompute.on == 1
+    iniSarModel=str2func(strcat('ini_',Switches.nameS{iS}));    % handle of the function ini_PET iE
+    sarModel=str2func(Switches.nameS{iS});                      % handle of the function PET iE
+else
+    iniSarModel = [];
+    sarModel = [];
+end
+if Switches.DA.on == 1
+    daModel=str2func(strcat(Switches.DA.tech,'_func'));         % handle of the assimilation function
+end
+
+%% Reservoirs to update
+if Switches.DA.on == 1
+    allModelUpdatedRes=load(fullfile('Data',Switches.timeStep,'Misc','reservoir_to_update'));
+    Switches.DA.updatedRes=allModelUpdatedRes.(Switches.nameM{iM,1});
+end
+
+%% Warm Up
+if Switches.warmUpCompute.on == 1
+    % Input argument
+    DataWu=varargin{1};
+    % Launch warm up
+    if Switches.snowmeltCompute.on == 1
+        [ParamWu, SarParamWu] = warmUp(Switches, DataWu, iniHydroModel, hydroModel, iniPetModel, petModel, iniSarModel, sarModel, modelParam);
+    else
+        [ParamWu]              = warmUp(Switches, DataWu, iniHydroModel, hydroModel, iniPetModel, petModel, iniSarModel, sarModel, modelParam);
+    end
+end
+
+%% Data assimilation initialization
+if Switches.DA.on == 1
+    [DataSim, w]=ini_DA(Switches,DataSim);% Noisy inputs
+end
+
+%% Simulation
+if Switches.verb.on && ~Switches.parallelCompute.on; dispstat('Beginning of the simulation...','keepprev'); dispstat('Simulation progress: 0%');end
+
+%% Simulation with Data Assimilation
+if Switches.DA.on == 1
+    %% Initialization of models for the Data Assimilation
+    
+    % Compute potential evapotranspiration
+    if Switches.petCompute.on == 1
+        DataSim.ERP=NaN(size(DataSim.Date,1),Switches.DA.N);
+        selectField  ={'TpetRP','TminRP','TmaxRP'};
+        selectField2 ={'T'  ,'Tmin'  ,'Tmax'  };
+        for imDA=1:Switches.DA.N
+            for iField=1:numel(selectField)
+                DataSimPETtmp.(selectField2{iField})=DataSim.(selectField{iField})(:,imDA);
+            end
+            DataSimPETtmp = mergeStruct(DataSim, DataSimPETtmp); % Retrieve data from DataSim and merge them with DataDA
+            [PetData] = iniPetModel(Switches,DataSimPETtmp);
+            [DataSim.ERP(:,imDA)] = petModel(PetData); % Compute PET for the ith DA member
+        end
+    end
+    
+    % Snow accounting model initialization
+    if Switches.snowmeltCompute.on == 1
+        [SarResult, SarParam] = iniSarModel(Switches, DataSim, modelParam);
+        SarResult = structfun(@(x) ( permute(x, [1,3,2]) ), SarResult, 'UniformOutput', false); % add a ghost dimension
+        SarResult = structfun(@(x) ( repmat(x, [1, Switches.DA.N, 1]) ), SarResult, 'UniformOutput', false); % replicate for the matrix for the N DA members
+        SarParam(1:Switches.DA.N)=SarParam; % replicate for the structure for the N DA members
+    end
+    
+    % Hydrological model initialization
+    [Result,Param] = iniHydroModel(Switches, DataSim.Date, modelParam);
+    Result = structfun(@(x) ( permute(x, [1,3,2]) ), Result, 'UniformOutput', false); % add a ghost dimension
+    Result = structfun(@(x) ( repmat(x, [1, Switches.DA.N, 1]) ), Result, 'UniformOutput', false); % replicate for the parameters for the N DA members
+    Param(1:Switches.DA.N)=Param; % replicate for the structure for the N DA members
+    
+    % Initialization of states with WarmUp
+    if Switches.warmUpCompute.on == 1
+        Param(:) = ParamWu;
+        if Switches.snowmeltCompute.on == 1
+            SarParam(:) = SarParamWu;
+        end
+    end
+    
+    %% Run simulation
+    if Switches.snowmeltCompute.on == 1
+        %% With snow accounting
+        if Switches.exportLight.on == 1
+            for t = 1 : length(DataSim.Date)
+                if Switches.verb.on && ~mod(t,floor(length(DataSim.Date)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/length(DataSim.Date)))); end
+                for imDA=1:Switches.DA.N
+                    [SarResult.runoffD(t,imDA), SarParam(imDA)] = ...
+                        sarModel(DataSim.PtRP(t,imDA), DataSim.TsnoRP(t,imDA),...
+                        DataSim.TmaxRP(t,imDA), DataSim.TminRP(t,imDA), DataSim.Date(t,:), SarParam(imDA));
+                    [Result.Qs(t,imDA), Param(imDA)] = ...
+                        hydroModel(SarResult.runoffD(t,imDA), DataSim.ERP(t,imDA), Param(imDA));
+                end
+                % DA Filter
+                if ~mod(t,Switches.DA.dt)
+                    if ~any(isnan(DataSim.QRP(t,:)))
+                        switch Switches.DA.tech
+                            case 'EnKF'
+                                [Param]   = daModel(Param, Result.Qs(t,:), DataSim.Q(t,:), DataSim.QRP(t,:), DataSim.eQRP(t,:), Switches.DA, w);
+                            case 'PF'
+                                [Param, w]= daModel(Param, Result.Qs(t,:), DataSim.Q(t,:), DataSim.QRP(t,:), DataSim.eQRP(t,:), Switches.DA, w);
+                            case 'PertOnly' % Do nothing.
+                        end
+                    end
+                end
+            end
+        elseif Switches.exportLight.on == 0
+            for t = 1 : length(DataSim.Date)
+                if Switches.verb.on && ~mod(t,floor(length(DataSim.Date)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/length(DataSim.Date)))); end
+                for imDA=1:Switches.DA.N
+                    [SarResult.runoffD(t,imDA), SarParam(imDA), SarResult.Pg(t,imDA,:), SarResult.Pl(t,imDA,:),...
+                        SarResult.G(t,imDA,:), SarResult.eTg(t,imDA,:), SarResult.snowMelt(t,imDA,:)] = ...
+                        sarModel(DataSim.PtRP(t,imDA), DataSim.TsnoRP(t,imDA), DataSim.TmaxRP(t,imDA),...
+                        DataSim.TminRP(t,imDA), DataSim.Date(t,:), SarParam(imDA));
+                    [Result.Qs(t,imDA), Param(imDA), Result.inter(t,imDA,:), Result.interq(t,imDA,:)] = ...
+                        hydroModel(SarResult.runoffD(t,imDA), DataSim.ERP(t,imDA), Param(imDA));
+                end
+                % Perform DA
+                if ~mod(t,Switches.DA.dt)
+                    if ~any(isnan(DataSim.QRP(t,:)))
+                        switch Switches.DA.tech
+                            case 'EnKF'
+                                [Param]   = daModel(Param, Result.Qs(t,:), DataSim.Q(t,:), DataSim.QRP(t,:), DataSim.eQRP(t,:), Switches.DA, w);
+                            case 'PF'
+                                [Param, w]= daModel(Param, Result.Qs(t,:), DataSim.Q(t,:), DataSim.QRP(t,:), DataSim.eQRP(t,:), Switches.DA, w);
+                            case 'PertOnly' % Do nothing.
+                        end
+                    end
+                end
+            end
+        end
+        % Output
+        varargout{1}=SarResult;
+        
+    elseif Switches.snowmeltCompute.on == 0
+        %% No Snow accounting
+        if Switches.exportLight.on == 1
+            for t = 1 : length(DataSim.Date)
+                if Switches.verb.on && ~mod(t,floor(length(DataSim.Date)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/length(DataSim.Date)))); end
+                for imDA=1:Switches.DA.N
+                    [Result.Qs(t,imDA), Param(imDA)] = ...
+                        hydroModel(DataSim.PtRP(t,imDA), DataSim.ERP(t,imDA), Param(imDA));
+                end
+                % Perform DA
+                if ~mod(t,Switches.DA.dt)
+                    if ~any(isnan(DataSim.QRP(t,:)))
+                        switch Switches.DA.tech
+                            case 'EnKF'
+                                [Param]   = daModel(Param, Result.Qs(t,:), DataSim.Q(t,:), DataSim.QRP(t,:), DataSim.eQRP(t,:), Switches.DA, w);
+                            case 'PF'
+                                [Param, w]= daModel(Param, Result.Qs(t,:), DataSim.Q(t,:), DataSim.QRP(t,:), DataSim.eQRP(t,:), Switches.DA, w);
+                            case 'PertOnly' % Do nothing.
+                        end
+                    end
+                end
+            end
+        elseif Switches.exportLight.on == 0
+            for t = 1 : length(DataSim.Date)
+                if Switches.verb.on && ~mod(t,floor(length(DataSim.Date)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/length(DataSim.Date)))); end
+                for imDA=1:Switches.DA.N
+                    [Result.Qs(t,imDA), Param(imDA), Result.inter(t,imDA,:), Result.interq(t,imDA,:)] = ...
+                        hydroModel(DataSim.PtRP(t,imDA), DataSim.ERP(t,imDA), Param(imDA));
+                end
+                % Perform DA
+                if ~mod(t,Switches.DA.dt)
+                    if ~any(isnan(DataSim.QRP(t,:)))
+                        switch Switches.DA.tech
+                            case 'EnKF'
+                                [Param]   = daModel(Param, Result.Qs(t,:), DataSim.Q(t,:), DataSim.QRP(t,:), DataSim.eQRP(t,:), Switches.DA, w);
+                            case 'PF'
+                                [Param, w]= daModel(Param, Result.Qs(t,:), DataSim.Q(t,:), DataSim.QRP(t,:), DataSim.eQRP(t,:), Switches.DA, w);
+                            case 'PertOnly' % Do nothing.
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+
+%% Open Loop simulation
+if Switches.DA.on == 0
+    %% Initialization of models for the open loop
+    
+    % Compute potential evapotranspiration
+    if Switches.petCompute.on == 1
+        [PetData] = iniPetModel(Switches,DataSim);
+        [DataSim.E] = petModel(PetData);
+    end
+    
+    % Snow accounting model initialization
+    if Switches.snowmeltCompute.on == 1
+        [SarResult, SarParam] = iniSarModel(Switches, DataSim, modelParam);
+    end
+    
+    % Hydrological model initialization
+    [Result,Param] = iniHydroModel(Switches, DataSim.Date, modelParam);
+    
+    % Initialization of states with WarmUp
+    if Switches.warmUpCompute.on == 1
+        Param(:) = ParamWu;
+        if Switches.snowmeltCompute.on == 1
+            SarParam(:) = SarParamWu;
+        end
+    end
+    %% Run simulation
+    if Switches.snowmeltCompute.on == 1
+        %% With snow accounting
+        if  Switches.exportLight.on == 1
+            for t = 1 : length(DataSim.Date)
+                if Switches.verb.on && ~mod(t,floor(length(DataSim.Date)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/length(DataSim.Date)))); end
+                [SarResult.runoffD(t), SarParam] = ...
+                    sarModel(DataSim.Pt(t), DataSim.T(t), DataSim.Tmax(t),...
+                    DataSim.Tmin(t), DataSim.Date(t,:), SarParam);
+                [Result.Qs(t,1),Param] = hydroModel(SarResult.runoffD(t), DataSim.E(t), Param);
+            end
+        elseif Switches.exportLight.on == 0
+            for t = 1 : length(DataSim.Date)
+                if Switches.verb.on && ~mod(t,floor(length(DataSim.Date)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/length(DataSim.Date)))); end
+                [SarResult.runoffD(t), SarParam, SarResult.Pg(t,:), SarResult.Pl(t,:),...
+                    SarResult.G(t,:), SarResult.eTg(t,:), SarResult.snowMelt(t,:)] = ...
+                    sarModel(DataSim.Pt(t), DataSim.T(t), DataSim.Tmax(t),...
+                    DataSim.Tmin(t), DataSim.Date(t,:), SarParam);
+                [Result.Qs(t,1),Param, Result.inter(t,:),Result.interq(t,:)] = ...
+                    hydroModel(SarResult.runoffD(t), DataSim.E(t), Param);
+            end
+        end
+        
+        % Output
+        varargout{1}=SarResult;
+        
+    elseif Switches.snowmeltCompute.on == 0
+        %% No Snow accounting
+        if Switches.exportLight.on == 1
+            for t = 1 : length(DataSim.Date)
+                if Switches.verb.on && ~mod(t,floor(length(DataSim.Date)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/length(DataSim.Date)))); end
+                [Result.Qs(t,1),Param] = hydroModel(DataSim.Pt(t), DataSim.E(t), Param);
+            end
+        elseif Switches.exportLight.on == 0
+            for t = 1 : length(DataSim.Date)
+                if Switches.verb.on && ~mod(t,floor(length(DataSim.Date)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/length(DataSim.Date)))); end
+                [Result.Qs(t,1),Param, Result.inter(t,:),Result.interq(t,:)] = ...
+                    hydroModel(DataSim.Pt(t), DataSim.E(t), Param);
+            end
+        end
+    end
+end
+Result.DateSim = DataSim.Date;
