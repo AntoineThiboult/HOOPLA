@@ -29,8 +29,13 @@ function [Qsim, param, varargout] = HydroMod16( P, E, param )
 % 	.T = Réservoir de routage quadratique (mm)
 %
 % FOLLOWING
-% O’Connell et al. (1970)
-% Department of Engineering Hydrology, University College, Galway, Ireland
+%  - O’Connell, P.E., Nash, J.E., Farrell, J.P., 1970. River flow 
+%    forecasting through conceptual models, Part II – the Brosna catchment 
+%    at Ferbane. J. Hydrol. 10, 317–329. (Department of Engineering 
+%    Hydrology, University College, Galway, Ireland)
+%  - Perrin, C. (2000). Vers une amélioration d'un modèle global pluie-débit, 
+%    PhD Thesis, Appendix 1, p. 438-442. Retrieved from 
+%    https://tel.archives-ouvertes.fr/tel-00006216
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)

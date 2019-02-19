@@ -29,8 +29,9 @@ function [Qsim, param, varargout] = HydroMod15( P, E, param )
 % 	.T = Réservoir de routage
 %
 % FOLLOWING
-% Chiew (2002)
-% University of Melbourne, Australia
+% Chiew, F.H.S., Peel, M.C., Western, A.W., 2002. Application and testing 
+% of the simple rainfall-runoff model SIMHYD. pp. 335–367. (University of 
+% Melbourne, Australia)
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -53,7 +54,7 @@ CAP1=x(1);
 CAP=min(CAP1,E);
 CAP=min(P,CAP);
 
-if P > CAP;
+if P > CAP
     EXC=P-CAP;
     E1=CAP;
 else

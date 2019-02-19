@@ -28,7 +28,12 @@ function [Qsim, param, varargout] = HydroMod8( P, E, param )
 % 	.R = Réservoir de routage rapide (mm)
 %
 % FOLLOWING
-% Littlewood et al. (1997)
+%  - Littlewood et al. (1997), The PC version of IHACRES for catchment-scale 
+%    rainfall-streamflow modelling. Version 1.0. User Guide. Institute of 
+%    Hydrology(Ed.), 89 p
+%  - Perrin, C. (2000). Vers une amélioration d'un modèle global pluie-débit, 
+%    PhD Thesis, Appendix 1, p. 376-382. Retrieved from 
+%    https://tel.archives-ouvertes.fr/tel-00006216
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -36,10 +41,10 @@ function [Qsim, param, varargout] = HydroMod8( P, E, param )
 %% Modeling
 % Get parameters
 %
-x   = param.x ;
-S   = param.S ;
-T   = param.T ;
-R   = param.R ;
+x  = param.x ;
+S  = param.S ;
+T  = param.T ;
+R  = param.R ;
 DL = param.DL ;
 HY = param.HY ;
 

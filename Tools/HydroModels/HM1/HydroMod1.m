@@ -27,8 +27,11 @@ function [Qsim, param, varargout] = HydroMod1( P, E, param )
 %   .T    = Réservoir de routage direct
 %
 % FOLLOWING
-% Thornthwaite et Mather (1955)
-% Climatology Drexel Institute of Technology, Etats-Unis
+%  - Thornthwaite, C.W., Mather, J.R., 1955. The water balance. Report. 
+%    (Drexel Institute of Climatology. United States)
+%  - Perrin, C. (2000). Vers une amélioration d'un modèle global pluie-débit, 
+%    PhD Thesis, Appendix 1, p. 313-316. Retrieved from 
+%    https://tel.archives-ouvertes.fr/tel-00006216
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)

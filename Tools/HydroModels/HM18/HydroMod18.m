@@ -28,7 +28,13 @@ function [Qsim, param, varargout] = HydroMod18( P, E, param )
 % 	.R = Réservoir de routage quadratique (mm)
 %
 % FOLLOWING
-% Beven and Kirkby (1979)
+%  - Beven, K.J., Kirkby, M.J., Schofield, N., Tagg, A.F., 1984. Testing a 
+%    physically-based flood forecasting model (TOPMODEL) for 3 UK catchments. 
+%    J. Hydrol. 69, 119–143. (Institute of Environmental and Biological
+%    Sciences, University of Lancaster, UK)
+%  - Perrin, C. (2000). Vers une amélioration d'un modèle global pluie-débit, 
+%    PhD Thesis, Appendix 1, p. 452-458. Retrieved from
+%    https://tel.archives-ouvertes.fr/tel-00006216
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)

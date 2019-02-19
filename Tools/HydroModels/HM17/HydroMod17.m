@@ -29,8 +29,12 @@ function [Qsim, param, varargout] = HydroMod17( P, E, param )
 % 	.L = Réservoir souterrain (mm)
 %
 % FOLLOWING
-% Sugawara (1979)
-% National Research Centre for Disaster Prevention, Tokyo, Japon
+%  - Sugawara, M., 1979. Automatic calibration of the tank model. 
+%    Hydrol. Sci. 24, 375–388. (National Research Centre for Disaster 
+%    Prevention, Tokyo, Japan)
+%  - Perrin, C. (2000). Vers une amélioration d'un modèle global pluie-débit, 
+%    PhD Thesis, Appendix 1, p. 443-447. Retrieved from 
+%    https://tel.archives-ouvertes.fr/tel-00006216
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)

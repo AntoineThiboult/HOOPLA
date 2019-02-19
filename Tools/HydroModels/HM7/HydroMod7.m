@@ -29,8 +29,12 @@ function [Qsim, param, varargout] = HydroMod7( P, E, param )
 % 	.T = Réservoir souterrain (mm)
 %
 % FOLLOWING
-% Boyle DP (2000)
-% Université d'Arizona
+%  - Boyle D.P. (2000) Multicriteria calibration of hydrological models, 
+%    Ph.D. dissertation, Dep. of Hydrol. and Water Resour., Univ. of Arizona,
+%    Tucson, USA
+%  - Wagener, T., Boyle, D.P., Lees, M.J., Wheater, H.S., Gupta, H.V., 
+%    Sorooshian, S., 2001. A framework for development and application of 
+%    hydrological models. Hydrol. Earth Syst. Sci. 5, 13–26.
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)

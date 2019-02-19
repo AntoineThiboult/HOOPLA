@@ -29,8 +29,12 @@ function [Qsim, param, varargout] = HydroMod2( P, E, param )
 % 	.T = Réservoir souterrain (mm)
 %
 % FOLLOWING
-% INRS Eau
-% Girard et al. (1972)
+%  - Girard, G., Morin, G., Charbonneau, R., 1972. Modèle précipitations-débits
+%    à discrétisation spatiale. Cahiers ORSTOM, Série Hydrologie 9, 35–52.
+%    (INRS Eau, Québec, Canada)
+%  - Perrin, C. (2000). Vers une amélioration d'un modèle global pluie-débit,
+%    PhD Thesis, Appendix 1, p. 322-326. Retrieved from
+%    https://tel.archives-ouvertes.fr/tel-00006216
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)

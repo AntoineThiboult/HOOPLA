@@ -1,5 +1,5 @@
 function [Qsim, param, varargout] = HydroMod10( P, E, param )
-% 
+%
 % [Qsim, param, varargout] = HydroMod10( P, E, param )
 %
 % MOHYSE hydrological model (modified version)
@@ -31,7 +31,9 @@ function [Qsim, param, varargout] = HydroMod10( P, E, param )
 %   .HU   = Hydrograph values (mm) - updated at each time step
 %
 % FOLLOWING
-% V. Fortin (Environnement Canada), R. Turcotte (CEHQ)
+% Fortin, V., Turcotte, R., 2007. Le modèle hydrologique mohyse, note de
+% cours pour SCA7420. Report, Département des sciences de la terre et de
+% l’atmosphère, Université du Québec à Montreal.
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)

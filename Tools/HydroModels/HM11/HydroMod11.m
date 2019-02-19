@@ -1,5 +1,5 @@
 function [Qsim, param, varargout] = HydroMod11( P, E, param )
-% 
+%
 % [Qsim, param, varargout] = HydroMod11( P, E, param )
 %
 % MORDOR hydrological model
@@ -31,8 +31,11 @@ function [Qsim, param, varargout] = HydroMod11( P, E, param )
 %   .H2   = Hydrograph 2 values (mm) - updated at each time step
 %
 % FOLLOWING
-% Mathevet, T., Quels modéles pluie-débit globaux au pas de temps horaires,
-% 2005
+%  - Garçon, R., 1999. Modèle global pluie-débit pour la prévision et la 
+%    prédétermination des crues. La Houille Blanche 7 (8), 88–95
+%  - Mathevet, T. 2005, Quels modéles pluie-débit globaux au pas de temps
+%    horaires, Développements empiriques et comparaison de modèles sur un large
+%    échantillon de bassin versant. PhD Thesis, Cemagref / Engref
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)

@@ -28,7 +28,7 @@ function [Qsim, param, varargout] = HydroMod5( P, E, param )
 %   .H2   = Hydrograph 2 values (mm) - updated at each time step
 %
 % FOLLOWING
-% Perrin C, Michel C & AndrÃ©assian V. 2003. Improvement of a parsimonious
+%  - Perrin C, Michel C & Andréassian V. 2003. Improvement of a parsimonious
 %    model for streamflow simulation. J. Hydrol. 279, 275-289.
 %
 % Programmed by F. Anctil, Univ. Laval (01-2009)

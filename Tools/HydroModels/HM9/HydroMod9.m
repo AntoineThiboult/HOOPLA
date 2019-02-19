@@ -28,8 +28,14 @@ function [Qsim, param, varargout] = HydroMod9( P, E, param )
 %   .R    = Réservoir de routage quadratique
 %
 % FOLLOWING
-% Mazenc et al. (1984)
-% Bureau de Recherches Géologiques et Minières, Orléans, France
+%  - Mazenc, B., Sanchez, M., Thiery, D., 1984. Analyse de la influence de 
+%    la physiographie d’un bassin versant sur les paramètres d’un modèle
+%    hydrologique global et sur les débits caractéristiques à la exutoire. 
+%    J. Hydrol. 69, 97–188. (Bureau de Recherches Géologiques et Minières, 
+%    Orléans, France)
+%  - Perrin, C. (2000). Vers une amélioration d'un modèle global pluie-débit, 
+%    PhD Thesis, Appendix 1, p. 387-390. Retrieved from 
+%    https://tel.archives-ouvertes.fr/tel-00006216
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)

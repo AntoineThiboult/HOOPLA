@@ -35,7 +35,13 @@ function [Qsim, param, varargout] = HydroMod12( P, E, param )
 % 	.GW = Rï¿½servoir souterrain (mm)
 %
 % FOLLOWING
-% Nielsen et Hansen (1973)
+%  - Nielsen, S.A., Hansen, E., 1973. Numerical simulation of the 
+%    rainfall-runoff process on a daily basis. Nord. Hydrol. 4, 171–190.
+%    (Institute of Hydrodynamics and Hydraulic Engineering, Technical 
+%    University of Denmark, and The Danish Hydraulic Institute of Denmark.)
+%  - Perrin, C. (2000). Vers une amélioration d'un modèle global pluie-débit, 
+%    PhD Thesis, Appendix 1, p. 411-415. Retrieved from 
+%    https://tel.archives-ouvertes.fr/tel-00006216
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)

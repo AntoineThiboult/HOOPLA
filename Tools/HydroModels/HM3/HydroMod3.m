@@ -27,8 +27,14 @@ function [Qsim, param, varargout] = HydroMod3( P, E, param )
 % 	.T = Réservoir souterrain (mm)
 %
 % FOLLOWING
-% Cormary et Guilbot (1973)
-% Laboratoire d’Hydrologie Mathématique, Université des Sciences, Montp.
+%  - Cormary, Y., Guilbot, A., 1973. Étude des relations pluie-débit sur 
+%    trois bassins versants d’investigation. In: publications, I. (Ed.), 
+%    Design of water resources projects with inadequate data: IAHS Madrid 
+%    Symposium. pp. 265–279. (Laboratoire d’Hydrologie Mathématique, 
+%    Université des Sciences, Montpellier, France.)
+%  - Perrin, C. (2000). Vers une amélioration d'un modèle global pluie-débit, 
+%    PhD Thesis, Appendix 1, p. 327-332. Retrieved from 
+%    https://tel.archives-ouvertes.fr/tel-00006216
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)

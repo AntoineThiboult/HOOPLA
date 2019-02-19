@@ -29,7 +29,13 @@ function [Qsim, param, varargout] = HydroMod19( P, E, param )
 % 	.T = Réservoir de routage lent (mm)
 %
 % FOLLOWING
-% Warmerdam et al. (1993)
+%  - Warmerdam, P.M., Kole, J., Chormanski, J., 1997. Modelling rainfall-runoff 
+%    processes in the Hupselse beek research basin. In: IHP-V, Technical 
+%    Documents in Hydrology. pp. 155–160. (Wageningen Agricultural University,
+%    Netherlands)
+%  - Perrin, C. (2000). Vers une amélioration d'un modèle global pluie-débit, 
+%    PhD Thesis, Appendix 1, p. 459-462. Retrieved from 
+%    https://tel.archives-ouvertes.fr/tel-00006216
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)

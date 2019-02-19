@@ -27,8 +27,15 @@ function [Qsim, param, varargout] = HydroMod4( P, E, param )
 % 	.T = Réservoir souterrain (mm)
 %
 % FOLLOWING
-% Thiery (1982)
-% Bureau de Recherches Géologiques et Minières (BRGM, ), Orléans (FR)
+%  - Thiery, D., 1982. Utilisation d’un modèle global pour identifier sur 
+%    un niveau piézométrique des influences multiples dues à diverses 
+%    activités humaines. In: Improvement of methods of long term prediction
+%    of variations in groundwater resources and regimes due to human 
+%    activity. vol. 136. pp. 71–77. (Bureau de Recherches Géologiques et 
+%    Minières (BRGM), Orléans, France )
+%  - Perrin, C. (2000). Vers une amélioration d'un modèle global pluie-débit, 
+%    PhD Thesis, Appendix 1, p. 333-336. Retrieved from 
+%    https://tel.archives-ouvertes.fr/tel-00006216
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)

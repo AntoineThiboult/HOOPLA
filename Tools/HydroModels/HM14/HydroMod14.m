@@ -32,7 +32,12 @@ function [Qsim, param, varargout] = HydroMod14( P, E, param )
 % 	.M = Réservoir de routage direct (mm)
 %
 % FOLLOWING
-% Burnash et al. (1973)
+%  - Burnash, R.J.C., Ferral, R.L., McGuire, R.A., 1973. A generalized 
+%    streamflow simulation system – Conceptual modelling for digital 
+%    computers. (US National Weather Service, Sacramento, California.)
+%  - Perrin, C. (2000). Vers une amélioration d'un modèle global pluie-débit, 
+%    PhD Thesis, Appendix 1, p. 366-371. Retrieved from 
+%    https://tel.archives-ouvertes.fr/tel-00006216
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
