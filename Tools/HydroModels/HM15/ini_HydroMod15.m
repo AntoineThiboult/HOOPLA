@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod15(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod15(Switches, Date, x)
 %
-% SIMHYD initialization, for details see associated SIMHYD.m file
+% HydroMod15 initialization, for details see associated HydroMod15.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -24,7 +24,7 @@ Param.S = x(2)*0.5;
 Param.R = 80;
 Param.T = 1;
 
-% Apply SIMHYD for all time steps
+% Initialize HydroMod15 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

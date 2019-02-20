@@ -4,29 +4,25 @@ function [Qsim, param, varargout] = HydroMod10( P, E, param )
 %
 % MOHYSE hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P       = mean areal rainfall (mm)
 % E       = mean areal evapotranspiration (mm)
-% Q       = stream flow (mm)
-% x       = the seven model parameters (see "param" below) - [7,1]
+% param   = the seven model parameters (see "param" below) - [7,1]
 %
 % OUTPUTS
-% Qs      = simulated stream flow (mm)
-% perf    = model performances
-% inter   = MOHYSE's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod10's internal values (varargout 1)
+% interq  = HydroMod10's internal flow components (varargout 2)
 % param -->
-%   Cetp non utilisé (calcul ETP)
-%   .x(1) = Ctr : coefficient d’ajustement de la transpiration
-%   Cf non utilisé (snowMelt)
-%   Tf non utilisé (snowMelt)
-%   .x(2) = Cinf : taux maximal d’infiltration
-%   .x(3) = Cva : coefficient de vidange de la zone vadose l’aquifère
-%   .x(4) = Cv : coefficient de vidange de la zone vadose cours d’eau
-%   .x(5) = Ca : coefficient  de  vidange  de  l’aquifère  vers  cours d’eau
-%   .x(6) = Alpha : ? paramètre de  forme  de  l’hydrogramme unitaire
-%   .x(7) = Beta : ? paramètre  d’échelle  de  l’hydrogramme  unitaire
-%   .S    = Réservoir de sol
-%   .R    = Réservoir souterrain
+%   .x(1) = transpiration coefficient (Ctr)
+%   .x(2) = maximum infiltration rate (Cinf)
+%   .x(3) = Emptying coefficient of the aquifer vadose zone (Cva)
+%   .x(4) = Emptying coefficient of the river vadose zone (Cv)
+%   .x(5) = Emptying coefficient from aquifer to river coefficient (Ca)
+%   .x(6) = Unit hydrograph shape parameter (alpha)
+%   .x(7) = Unit hydrograph scale parameter (beta)
+%   .S    = Soil reservoir state 
+%   .R    = Ground reservoir state
 %   .UH   = Unit hydrograph
 %   .HU   = Hydrograph values (mm) - updated at each time step
 %

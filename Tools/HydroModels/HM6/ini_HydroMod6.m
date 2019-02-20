@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod6(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod6(Switches, Date, x)
 %
-% HBV initialization, for details see associated HBV.m file
+% HydroMod6 initialization, for details see associated HydroMod6.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -24,7 +24,7 @@ UH= [t1-0.5, x(6)+0.5-t2]'; % Triangular hydrograph
 Param.UH = UH./sum(UH); % Normalization
 Param.H  = zeros( size(Param.UH) ) ;
 
-% Apply HBV for all time steps
+% Initialize HydroMod6 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

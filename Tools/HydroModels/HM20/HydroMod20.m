@@ -4,30 +4,29 @@ function [Qsim, param, varargout] = HydroMod20( P, E, param )
 %
 % XINANJIANG hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the eight model parameters (see "param" below) - [8,1]
+% param	= the eight model parameters (see "param" below) - [8,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = XINANJIANG's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod20's internal values (varargout 1)
+% interq  = HydroMod20's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = Coefficient de partage des écoulements
-% 	.x(2) = Coefficient de vidange du réservoir de la composante rapide
-% 	.x(3) = Coefficient de vidange du réservoir de la composante lente
-% 	.x(4) = Capacité du réservoir eau-sol
-% 	.x(5) = Capacité du réservoir sol
-% 	.x(6) = Délai
-% 	.x(7) = Coefficient de vidange du réservoir eau liée
-% 	.x(8) = Exposant du réservoir eau libre (param ex)
+% 	.x(1) = Flow partioning coefficient
+% 	.x(2) = Fast emptying reservoir coefficient
+% 	.x(3) = Slow emptying reservoir coefficient
+% 	.x(4) = Water-soil reservoir capacity
+% 	.x(5) = Soil reservoir capacity
+% 	.x(6) = Delay
+% 	.x(7) = Water-soil reservoir emptying coefficient
+% 	.x(8) = Free-water reservoir exponent
 %
-% 	.S = Réservoir sol (mm)
-% 	.R = Réservoir eau-sol (mm)
-% 	.T = Réservoir de routage rapide (mm)
-% 	.M = Réservoir de routage lent (mm)
+% 	.S = Soil reservoir state (mm)
+% 	.R = Water-soil reservoir state (mm)
+% 	.T = Fast routing reservoir state (mm)
+% 	.M = Slow routing reservoir state (mm)
 %
 % FOLLOWING
 %  - Zhao et al. (1980), Zhao and Liu (1995), The Xinanjiang model. IAHS
@@ -60,6 +59,7 @@ En = max(0,E-P);
 
 % If Evaporation
 %
+%#ok<*NASGU>
 if En > 0
     if S/x(5) >= 0.9
         Es = min(S,En);
@@ -69,7 +69,7 @@ if En > 0
         Es = min(S,(En*S)/(0.9*x(5)));
     end
     S=S-Es;
-    Qs0 = 0;
+    Qs0 = 0; 
     Ir = 0;
 else
     En = 0;

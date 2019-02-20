@@ -4,35 +4,34 @@ function [Qsim, param, varargout] = HydroMod12( P, E, param )
 %
 % NAM10 hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the ten model parameters (see "param" below) - [10,1]
+% param	= the ten model parameters (see "param" below) - [10,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = NAM's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod12's internal values (varargout 1)
+% interq  = HydroMod12's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = GWLBF0
-% 	.x(2) = CK12
-% 	.x(3) = CKIF
-% 	.x(4) = d�lai
-% 	.x(5) = TG
-% 	.x(6) = CKBF
-% 	.x(7) = Lmax
-% 	.x(8) = CQOF
-% 	.x(9) = Umax
-% 	.x(10) = GWLFL1
+% 	.x(1) = Emptying threshold of the ground reservoir
+% 	.x(2) = Emptying constant of routing reservoirs
+% 	.x(3) = Sub-surface flow constant
+% 	.x(4) = Delay
+% 	.x(5) = Percolation constant
+% 	.x(6) = Emptying constant of the ground reservoir
+% 	.x(7) = Maximum capacity of the surface reservoir
+% 	.x(8) = Surface flow constant
+% 	.x(9) = Maximum capacity of soil reservoir
+% 	.x(10) = Capillary rise parameter
 %
-% 	.U = R�servoir de surface (mm)
-% 	.L = R�servoir de sol (mm)
-% 	.CK1 = R�servoir de ruissellement overlandflow 1 (mm)
-% 	.CK2 = R�servoir de ruissellement overlandflow 2 (mm)
-% 	.CK1b = R�servoir de ruissellement interflow 1(mm)
-% 	.CK2b = R�servoir de ruissellement interflow 2(mm)
-% 	.GW = R�servoir souterrain (mm)
+% 	.U = Surface reservoir state (mm)
+% 	.L = Soil reservoir state (mm)
+% 	.CK1 = Overlandflow 1 reservoir state (mm)
+% 	.CK2 = Overlandflow 2 reservoir state (mm)
+% 	.CK1b = Interflow 1 reservoir state(mm)
+% 	.CK2b = Interflow 2 reservoir state(mm)
+% 	.GW = Ground water reservoir state (mm)
 %
 % FOLLOWING
 %  - Nielsen, S.A., Hansen, E., 1973. Numerical simulation of the 

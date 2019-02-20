@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod2(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod2(Switches, Date, x)
 %
-% CEQUEAU initialization, for details see associated CEQUEAU.m file
+% HydroMod2 initialization, for details see associated HydroMod2.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -23,7 +23,7 @@ Param.HY  = zeros( size(Param.DL) );
 Param.S = 500;
 Param.T = x(5)*0.2;
 
-% Apply CEQUEAU for all time steps
+% Initialize HydroMod2 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

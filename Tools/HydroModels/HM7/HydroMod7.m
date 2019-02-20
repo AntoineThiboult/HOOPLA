@@ -4,29 +4,28 @@ function [Qsim, param, varargout] = HydroMod7( P, E, param )
 %
 % HYMOD hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the six model parameters (see "param" below) - [6,1]
+% param	= the six model parameters (see "param" below) - [6,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = HYMOD's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod7's internal values (varargout 1)
+% interq  = HydroMod7's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = Capacité maximale du réservoir de sol (Cmax)
-% 	.x(2) = Variabilité spatiale de la capacité d'humidité du sol (Bexp)
-% 	.x(3) = Facteur de répartition des écoulements rapide/lent (alpha)
-% 	.x(4) = délai
-% 	.x(5) = Constante de vidange du réservoir de routage lent (Rs)
-% 	.x(6) = Constante de vidange des réservoirs de routage rapide (Rq)
+% 	.x(1) = Maximum capacity of soil reservoir (Cmax)
+% 	.x(2) = Spatial variability of soil moisture capacity (Bexp)
+% 	.x(3) = Distribution factor of fast/slow flows (alpha)
+% 	.x(4) = Delay
+% 	.x(5) = Emptying constant of slow routing reservoir (Rs)
+% 	.x(6) = Emptying constant of fast routing reservoir (Rq)
 %
-% 	.S = Réservoir de sol (mm)
-% 	.R1 = Réservoir de routage rapide 1 (mm)
-% 	.R2 = Réservoir de routage rapide 2 (mm)
-% 	.R3 = Réservoir de routage rapide 2 (mm)
-% 	.T = Réservoir souterrain (mm)
+% 	.S  = Soil reservoir state (mm)
+% 	.R1 = Fast routing reservoir 1 state (mm)
+% 	.R2 = Fast routing reservoir 2 state (mm)
+% 	.R3 = Fast routing reservoir 3 state (mm)
+% 	.T  = Ground reservoir state (mm)
 %
 % FOLLOWING
 %  - Boyle D.P. (2000) Multicriteria calibration of hydrological models, 

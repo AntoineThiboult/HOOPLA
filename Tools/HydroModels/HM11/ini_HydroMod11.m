@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod11(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod11(Switches, Date, x)
 %
-% MORDOR initialization, for details see associated MORDOR.m file
+% HydroMod11 initialization, for details see associated HydroMod11.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -29,7 +29,7 @@ Param.H2vsal  = zeros( size(Param.UH2) ) ;
 Param.H2rur  = zeros( size(Param.UH2) ) ;
 Param.H2vn  = zeros( size(Param.UH2) ) ;
 
-% Apply MORDOR for all time steps
+% Initialize HydroMod11 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

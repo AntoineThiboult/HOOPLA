@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod17(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod17(Switches, Date, x)
 %
-% TANK initialization, for details see associated TANK.m file
+% HydroMod17 initialization, for details see associated HydroMod17.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -25,7 +25,7 @@ Param.R = 10;
 Param.T = 10;
 Param.L = 10;
 
-% Apply TANK for all time steps
+% Initialize HydroMod17 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

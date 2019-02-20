@@ -4,29 +4,28 @@ function [Qsim, param, varargout] = HydroMod2( P, E, param )
 %
 % CEQUEAU hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS 
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the nine model parameters (see "param" below) - [9,1]
+% param = the nine model parameters (see "param" below) - [9,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = CEQUEAU's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod2's internal values (varargout 1)
+% interq  = HydroMod2's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = seuil d'infiltration (mm)
-% 	.x(2) = seuil de vidange du premier réservoir (mm)
-% 	.x(3) = constante de vidange d’infiltration
-% 	.x(4) = constante de vidange latérale supérieure du réservoir sol
-% 	.x(5) = capacité maximum du réservoir souterrain (mm)
-% 	.x(6) = délai
-% 	.x(7) = seuil de vidange du réservoir souterrain (mm)
-% 	.x(8) = constante de vidange latérale inférieure du réservoir sol
-% 	.x(9) = constante de vidange inférieure du réservoir souterrain
+% 	.x(1) = infiltratin threshold (mm)
+% 	.x(2) = 1rst reservoir emptying threshold (mm)
+% 	.x(3) = emptying infiltration constant
+% 	.x(4) = upper lateral emptying constant of soil reservoir
+% 	.x(5) = maximum capacity of ground reservoir (mm)
+% 	.x(6) = delay
+% 	.x(7) = ground reservoir emptying threshold (mm)
+% 	.x(8) = lower lateral emptying constant of soil reservoir
+% 	.x(9) = lower lateral emptying constant of ground reservoir
 %
-% 	.S = Réservoir de surface (mm)
-% 	.T = Réservoir souterrain (mm)
+% 	.S = Surface reservoir state (mm)
+% 	.T = Ground reservoir state (mm)
 %
 % FOLLOWING
 %  - Girard, G., Morin, G., Charbonneau, R., 1972. Modèle précipitations-débits

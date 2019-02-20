@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod10(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod10(Switches, Date, x)
 %
-% MOHYSE initialization, for details see associated MOHYSE.m file
+% HydroMod10 initialization, for details see associated HydroMod10.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -26,7 +26,7 @@ Param.HUQ1 = zeros( size(Param.UH) ) ;
 Param.HUQ2 = zeros( size(Param.UH) ) ;
 Param.HUQ3 = zeros( size(Param.UH) ) ;
 
-% Apply MOHYSE for all time steps
+% Initialize HydroMod10 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

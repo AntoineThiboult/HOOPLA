@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod16(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod16(Switches, Date, x)
 %
-% SMAR initialization, for details see associated SMAR.m file
+% HydroMod16 initialization, for details see associated HydroMod16.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -45,7 +45,7 @@ Param.s14 = 2;
 Param.s15 = 2;
 Param.s16 = 2;
 
-% Apply SMAR for all time steps
+% Initialize HydroMod16 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

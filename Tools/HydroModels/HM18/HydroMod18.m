@@ -4,28 +4,27 @@ function [Qsim, param, varargout] = HydroMod18( P, E, param )
 %
 % TOPMODEL hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the ten model parameters (see "param" below) - [7,1]
+% param	= the ten model parameters (see "param" below) - [7,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = TOPMODEL's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod18's internal values (varargout 1)
+% interq  = HydroMod18's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = Capacité du réservoir de routage quadratique
-% 	.x(2) = Paramètre de vidange exponentielle
-% 	.x(3) = Capacité du réservoir d'interception (pouvant être fixé)
-% 	.x(4) = Délai
-% 	.x(5) = Paramètre m
-% 	.x(6) = Paramètre de l'indice topographique
-% 	.x(7) = Paramètre d'ETP
+% 	.x(1) = Quadratic routing reservoir capacity
+% 	.x(2) = Exponential emptying paramter
+% 	.x(3) = Interception reservoir capacity
+% 	.x(4) = Delay
+% 	.x(5) = Topographic coefficient distribution parameter
+% 	.x(6) = Topographic index parameter
+% 	.x(7) = PET parameter
 %
-% 	.S = Réservoir d'interception (mm)
-% 	.T = Réservoir souterrain (mm)
-% 	.R = Réservoir de routage quadratique (mm)
+% 	.S = Interception reservoir state (mm)
+% 	.T = Ground reservoir state (mm)
+% 	.R = Quadratic routing reservoir state (mm)
 %
 % FOLLOWING
 %  - Beven, K.J., Kirkby, M.J., Schofield, N., Tagg, A.F., 1984. Testing a 

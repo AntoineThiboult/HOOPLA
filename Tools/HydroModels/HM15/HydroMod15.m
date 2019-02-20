@@ -4,29 +4,28 @@ function [Qsim, param, varargout] = HydroMod15( P, E, param )
 %
 % SIMHYD hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the eight model parameters (see "param" below) - [8,1]
+% param	= the eight model parameters (see "param" below) - [8,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = SIMHYD's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod15's internal values (varargout 1)
+% interq  = HydroMod15's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = Capacité du réservoir d'interception (mm)
-% 	.x(2) = Capacité du réservoir de sol (mm)
-% 	.x(3) = Constante de vidange du réservoir souterrain
-% 	.x(4) = Délai
-% 	.x(5) = Constante de vidange du réservoir de routage principal
-% 	.x(6) = Constante d'écoulement hypodermique
-% 	.x(7) = Constante de recharge de la nappe
-% 	.x(8) = Infiltration maximale (mm)
+% 	.x(1) = Interception reservoir capacity (mm)
+% 	.x(2) = Soil reservoir capacity (mm)
+% 	.x(3) = Emptying constant of ground reservoir
+% 	.x(4) = Delay
+% 	.x(5) = Emptying constant of main routing reservoir
+% 	.x(6) = Hypodermic flow constant
+% 	.x(7) = Groundwater recharge constant
+% 	.x(8) = Maximal infiltration (mm)
 %
-% 	.S = Réservoir de sol
-% 	.R = Réservoir souterrain
-% 	.T = Réservoir de routage
+% 	.S = Soil reservoir state
+% 	.R = Ground reservoir state
+% 	.T = Routing reservoir state
 %
 % FOLLOWING
 % Chiew, F.H.S., Peel, M.C., Western, A.W., 2002. Application and testing 

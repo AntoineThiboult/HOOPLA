@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod20(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod20(Switches, Date, x)
 %
-% XINANJIANG initialization, for details see associated XINANJIANG.m file
+% HydroMod20 initialization, for details see associated HydroMod20.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -25,7 +25,7 @@ Param.R = 1;
 Param.T = 5;
 Param.M = 400;
 
-% Apply XINANJIANG for all time steps
+% Initialize HydroMod20 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

@@ -4,29 +4,28 @@ function [Qsim, param, varargout] = HydroMod19( P, E, param )
 %
 % WAGENINGEN hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the ten model parameters (see "param" below) - [8,1]
+% param	= the ten model parameters (see "param" below) - [8,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = WAGENINGEN's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod19's internal values (varargout 1)
+% interq  = HydroMod19's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = seuil de vidange des percolations
-% 	.x(2) = capacité maximale du réservoir sol
-% 	.x(3) = constante de vidange des infiltrations
-% 	.x(4) = paramètre des remontées capillaires
-% 	.x(5) = paramètre de dissociation des écoulements
-% 	.x(6) = constante de vidange de l’écoulement rapide
-% 	.x(7) = constante de vidange de l’écoulement lent
-% 	.x(8) = délai
+% 	.x(1) = Percolation emptying threshold
+% 	.x(2) = Maximum capacity of soil reservoir
+% 	.x(3) = Infiltration emptying constant
+% 	.x(4) = Capillary rise parameter
+% 	.x(5) = Flow dissociation parameter
+% 	.x(6) = Fast emptying constant
+% 	.x(7) = Slow emptying constant
+% 	.x(8) = Delay
 %
-% 	.S = Réservoir sol (mm)
-% 	.R = Réservoir de routage rapide (mm)
-% 	.T = Réservoir de routage lent (mm)
+% 	.S = Soil reservoir constant state (mm)
+% 	.R = Fast routing reservoir state (mm)
+% 	.T = Slow routing reservoir state (mm)
 %
 % FOLLOWING
 %  - Warmerdam, P.M., Kole, J., Chormanski, J., 1997. Modelling rainfall-runoff 

@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod7(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod7(Switches, Date, x)
 %
-% HYMOD initialization, for details see associated HYMOD.m file
+% HydroMod7 initialization, for details see associated HydroMod7.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -26,7 +26,7 @@ Param.R2 = 1;
 Param.R3 = 1;
 Param.T = 300;
 
-% Apply HYMOD for all time steps
+% Initialize HydroMod7 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

@@ -4,29 +4,27 @@ function [Qsim, param, varargout] = HydroMod11( P, E, param )
 %
 % MORDOR hydrological model
 %
-% INPUTS (time series of daily observations [n,1])
-% P       = mean areal rainfall (mm)
-% E       = mean areal evapotranspiration (mm)
-% Q       = stream flow (mm)
-% x       = the six model parameters (see "param" below) - [6,1]
+% INPUTS
+% P     = mean areal rainfall (mm)
+% E     = mean areal evapotranspiration (mm)
+% param = the six model parameters (see "param" below) - [6,1]
 %
 % OUTPUTS
-% Qs      = simulated stream flow (mm)
-% perf    = model performances
-% inter   = MORD6's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod11's internal values (varargout 1)
+% interq  = HydroMod11's internal flow components (varargout 2)
 % param -->
-%   .x(1) = Coefficient correcteur sur la pluie
-%   .x(2) = Constante de vidange du réservoir L
-%   .x(3) = Constante de vidange du réservoir N
-%   .x(4) = Temps de réponse de l’hydrogramme unitaire HU2
-%   .x(5) = Capacité du réservoir U
-%   .x(6) = Capacité du réservoir L
+%   .x(1) = Rain correction coefficient
+%   .x(2) = Emptying constant of reservoir L
+%   .x(3) = Emptying constant of reservoir N
+%   .x(4) = Response time of unit hydrograph HU2
+%   .x(5) = Response time of unit hydrograph U
+%   .x(6) = Capacity of the reservoir L
 %
-%   .U    = Réservoir de surface
-%   .L    = Réservoir de sol
-%   .Z    = Réservoir de sol profond
-%   .N    = Réservoir souterrain
-%
+%   .U    = Surface reservoir state
+%   .L    = Soil reservoir state
+%   .Z    = Deep soil reservoir state
+%   .N    = Ground reservoir state
 %   .UH2  = Unit hydrograph 2
 %   .H2   = Hydrograph 2 values (mm) - updated at each time step
 %

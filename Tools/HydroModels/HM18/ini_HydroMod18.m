@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod18(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod18(Switches, Date, x)
 %
-% TOPMODEL initialization, for details see associated TOPMODEL.m file
+% HydroMod18 initialization, for details see associated HydroMod18.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -24,7 +24,7 @@ Param.S = 10;
 Param.T = 10^4-50;
 Param.R = x(1)*0.2;
 
-% Apply TOPMODEL for all time steps
+% Initialize HydroMod18 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

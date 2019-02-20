@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod3(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod3(Switches, Date, x)
 %
-% CREC initialization, for details see associated CREC.m file
+% HydroMod3 initialization, for details see associated HydroMod3.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -27,7 +27,7 @@ Param.S = 250;
 Param.R = 10;
 Param.T = 100;
 
-% Apply CREC for all time steps
+% Initialize HydroMod3 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

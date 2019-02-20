@@ -4,28 +4,27 @@ function [Qsim, param, varargout] = HydroMod9( P, E, param )
 %
 % MARTINE hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P       = mean areal rainfall (mm)
 % E       = mean areal evapotranspiration (mm)
-% Q       = stream flow (mm)
-% x       = the seven model parameters (see "param" below) - [7,1]
+% param   = the seven model parameters (see "param" below) - [7,1]
 %
 % OUTPUTS
-% Qs      = simulated stream flow (mm)
-% perf    = model performances
-% inter   = MARTINE's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod9's internal values (varargout 1)
+% interq  = HydroMod9's internal flow components (varargout 2)
 % param -->
-%   .x(1) = capacité du réservoir superficiel
-%   .x(2) = capacité du réservoir intermédiaire
-%   .x(3) = capacité du réservoir de routage quadratique
-%   .x(4) = constante de vidange du réservoir souterrain
-%   .x(5) = coefficient de partage
-%   .x(6) = délai
-%   .x(7) = constante de vidange du réservoir intermédiaire
-%   .S    = Réservoir de superficiel
-%   .T    = Réservoir de intermédiaire
-%   .L    = Réservoir souterrain
-%   .R    = Réservoir de routage quadratique
+%   .x(1) = Surface reservoir capacity
+%   .x(2) = Intermediate reservoir capacity
+%   .x(3) = Quadratic routing reservoir capacity
+%   .x(4) = Emptying constant of ground reservoir
+%   .x(5) = Distribution coefficient
+%   .x(6) = Delay
+%   .x(7) = Intermediate reservoir emptying constant
+%   .S    = Surface reservoir state
+%   .T    = Intermediate reservoir state
+%   .L    = Ground reservoir state
+%   .R    = Quadratic routing reservoir state
 %
 % FOLLOWING
 %  - Mazenc, B., Sanchez, M., Thiery, D., 1984. Analyse de la influence de 

@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod12(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod12(Switches, Date, x)
 %
-% NAM10 initialization, for details see associated NAM10.m file
+% HydroMod12 initialization, for details see associated HydroMod12.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -28,7 +28,7 @@ Param.CK2 = 0;
 Param.CK2b = 0;
 Param.GW = 50;
 
-% Apply NAM
+% Initialize HydroMod12 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

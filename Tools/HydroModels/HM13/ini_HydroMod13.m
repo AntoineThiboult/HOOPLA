@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod13(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod13(Switches, Date, x)
 %
-% PDM8 initialization, for details see associated PDM8.m file
+% HydroMod13 initialization, for details see associated HydroMod13.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -25,7 +25,7 @@ Param.T = 20;
 Param.M = 30;
 Param.N = 30;
 
-% Apply PDM
+% Initialize HydroMod13 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

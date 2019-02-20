@@ -4,29 +4,28 @@ function [Qsim, param, varargout] = HydroMod17( P, E, param )
 %
 % TANK hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the seven model parameters (see "param" below) - [7,1]
+% param	= the seven model parameters (see "param" below) - [7,1]
 %
 % OUTPUTS
-%    Qs = simulated stream flow (mm)
-% perf  = model performances
-% inter = TANK's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod17's internal values (varargout 1)
+% interq  = HydroMod17's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = seuil supérieur d’écoulement du premier réservoir
-% 	.x(2) = seuil inférieur d’écoulement
-% 	.x(3) = constante de vidange du premier réservoir
-% 	.x(4) = constante de vidange du deuxième réservoir
-% 	.x(5) = délai
-% 	.x(6) = coefficient de correction de l’ETP
-% 	.x(7) = constante de vidange du troisième réservoir
+% 	.x(1) = Upper flow threshold of soil reservoir
+% 	.x(2) = Lower flow threshold of soil reservoir
+% 	.x(3) = Fast emptying constant
+% 	.x(4) = Intermediate emptying constant
+% 	.x(5) = Delay
+% 	.x(6) = PET correction coefficient
+% 	.x(7) = Slow emptying constant
 %
-% 	.S = Réservoir de surface (mm)
-% 	.R = Réservoir sol supérieur (mm)
-% 	.T = Réservoir sol inférieur (mm)
-% 	.L = Réservoir souterrain (mm)
+% 	.S = Surface reservoir state (mm)
+% 	.R = Upper soil reservoir state (mm)
+% 	.T = Lower soil reservoir state (mm)
+% 	.L = Ground reservoir state (mm)
 %
 % FOLLOWING
 %  - Sugawara, M., 1979. Automatic calibration of the tank model. 

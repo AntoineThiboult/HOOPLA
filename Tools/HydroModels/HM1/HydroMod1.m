@@ -4,27 +4,26 @@ function [Qsim, param, varargout] = HydroMod1( P, E, param )
 %
 % BUCKET hydrological model
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P       = mean areal rainfall (mm)
 % E       = mean areal evapotranspiration (mm)
-% Q       = stream flow (mm)
-% x       = the six model parameters (see "param" below) - [6,1]
+% param   = the six model parameters (see "param" below) - [6,1]
 %
 % OUTPUTS
-% Qs      = simulated stream flow (mm)
-% perf    = model performances
-% inter   = BUCKET's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod1's internal values (varargout 1)
+% interq  = HydroMod1's internal flow components (varargout 2)
 % param -->
-%   .x(1) = capacité du réservoir sol
-%   .x(2) = constante de dissociation du débordement du réservoir sol
-%   .x(3) = constante de vidange du réservoir de routage (R)
-%   .x(4) = délai
-%   .x(5) = coefficient de partition de la pluie
-%   .x(6) = constante de vidange du réservoir de routage (R,T)
+%   .x(1) = soil reservoir capacity.
+%   .x(2) = soil reservoir overflow dissociation constant
+%   .x(3) = routing reservoir emptying constant (reservoir R)
+%   .x(4) = delay
+%   .x(5) = rainfall partitioning coefficient
+%   .x(6) = routing reservoir emptying constant (reservoir R and T)
 %
-%   .S    = Réservoir de sol
-%   .R    = Réservoir de la couche racinaire (sous-sol)
-%   .T    = Réservoir de routage direct
+%   .S    = Soil reservoir state
+%   .R    = Root layer reservoir state
+%   .T    = Direct routing reservoir state
 %
 % FOLLOWING
 %  - Thornthwaite, C.W., Mather, J.R., 1955. The water balance. Report. 

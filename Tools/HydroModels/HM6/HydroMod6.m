@@ -4,30 +4,29 @@ function [Qsim, param, varargout] = HydroMod6( P, E, param )
 %
 % HBV hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the nine model parameters (see "param" below) - [9,1]
+% param = the nine model parameters (see "param" below) - [9,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = HBV's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod6's internal values (varargout 1)
+% interq  = HydroMod6's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = Capacité du réservoir sol (mm)
-% 	.x(2) = Seuil pour l'ETP
-% 	.x(3) = Constante de vidange supérieure du réservoir intermédiaire
-% 	.x(4) = Constante de vidange du réservoir souterrain
-% 	.x(5) = Coefficient de percolation
-% 	.x(6) = Constante de temps de l'hydrogramme triangulaire
-% 	.x(7) = Exposant B
-% 	.x(8) = Seuil d'écoulement du réservoir intermédiaire
-% 	.x(9) = Constante de vidange inférieure du réservoir intermédiaire
+% 	.x(1) = Capacity of soil reservoir (mm)
+% 	.x(2) = PET threshold
+% 	.x(3) = Upper emptying constant of intermediate reservoir
+% 	.x(4) = Ground reservoir emptying constant
+% 	.x(5) = Percolation coefficient
+% 	.x(6) = Time constant of triangular hydrogram
+% 	.x(7) = B exponant
+% 	.x(8) = Flow threshold of intermediate reservoir
+% 	.x(9) = Lower emptying constant of the intermediate reservoir
 %
-% 	.S = Réservoir de sol (mm)
-% 	.R = Réservoir intermédiaire (mm)
-% 	.T = Réservoir souterrain (mm)
+% 	.S = Soil reservoir state (mm)
+% 	.R = Intermediate reservoir state (mm)
+% 	.T = Ground reservoir constant (mm)
 %
 % 	.UH  = Unit hydrograph
 % 	.H   = Hydrograph values (mm) - updated at each time step

@@ -4,29 +4,28 @@ function [Qsim, param, varargout] = HydroMod16( P, E, param )
 %
 % SMAR hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the eight model parameters (see "param" below) - [8,1]
+% param = the eight model parameters (see "param" below) - [8,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = SMAR's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod15's internal values (varargout 1)
+% interq  = HydroMod15's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = paramètre d’écoulement direct
-% 	.x(2) = paramètre d’infiltration Yc
-% 	.x(3) = coefficient de réduction de l’ETP C
-% 	.x(4) = capacité du réservoir quadratique
-% 	.x(5) = constante de vidange du réservoir de routage linéaire
-% 	.x(6) = délai
-% 	.x(7) = paramètre de correction de l’ETP
-% 	.x(8) = coefficient de partage G
+% 	.x(1) = Direct flow parameter
+% 	.x(2) = Infiltration paramter (Yc)
+% 	.x(3) = PET reduction factor (C)
+% 	.x(4) = Quadratic reservoir capacity
+% 	.x(5) = Emptying constant of the linear routing reservoir
+% 	.x(6) = Delay
+% 	.x(7) = PET correction parameter
+% 	.x(8) = Partitioning coefficient (G)
 %
-% 	.S = Réservoir de sol multicouches (N couches, de hauteur XF1)(mm)
-% 	.L = Réservoir de routage linéaire (mm)
-% 	.T = Réservoir de routage quadratique (mm)
+% 	.S = Multi-layer soil reservoir state (N layers with height XF1, in mm)
+% 	.L = Linear routing reservoir state (mm)
+% 	.T = Quadratic routing reservoir (mm)
 %
 % FOLLOWING
 %  - O’Connell, P.E., Nash, J.E., Farrell, J.P., 1970. River flow 

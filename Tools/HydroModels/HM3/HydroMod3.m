@@ -4,27 +4,26 @@ function [Qsim, param, varargout] = HydroMod3( P, E, param )
 %
 % CREC hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the six model parameters (see "param" below) - [6,1]
+% param	= the six model parameters (see "param" below) - [6,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = CREC's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod3's internal values (varargout 1)
+% interq  = HydroMod3's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = constante de vidange du réservoir souterrain
-% 	.x(2) = paramètre de percolation linéaire du réservoir sol
-% 	.x(3) = paramètre de séparation de la pluie brute
-% 	.x(4) = paramètre de séparation de la pluie brute et de rendement d'ETP
-% 	.x(5) = paramètre de vidange linéaire du réservoir sol
-% 	.x(6) = délai
+% 	.x(1) = ground reservoir emptying constant
+% 	.x(2) = linear percolation parameter of soil reservoir 
+% 	.x(3) = spliting paramter of (raw) rain
+% 	.x(4) = spliting paramter for (raw) rain and PET production
+% 	.x(5) = linear emptying paramter of soil reservoir
+% 	.x(6) = delay
 %
-% 	.S = Réservoir de sol (mm)
-% 	.R = Réservoir de routage de sol (mm)
-% 	.T = Réservoir souterrain (mm)
+% 	.S = Soil reservoir state (mm)
+% 	.R = Soil routing reservoir state (mm)
+% 	.T = Ground reservoir state (mm)
 %
 % FOLLOWING
 %  - Cormary, Y., Guilbot, A., 1973. Étude des relations pluie-débit sur 

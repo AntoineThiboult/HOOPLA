@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod19(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod19(Switches, Date, x)
 %
-% WAGENINGEN initialization, for details see associated WAGENINGEN.m file
+% HydroMod19 initialization, for details see associated HydroMod19.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -24,7 +24,7 @@ Param.S = 30;
 Param.R = 0;
 Param.T = 200;
 
-% Apply WAGENINGEN for all time steps
+% Initialization of HydroMod19 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

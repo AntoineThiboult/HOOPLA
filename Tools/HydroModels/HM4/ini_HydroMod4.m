@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod4(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod4(Switches, Date, x)
 %
-% GARDENIA initialization, for details see associated GARDENIA.m file
+% HydroMod4 initialization, for details see associated HydroMod4.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -24,7 +24,7 @@ Param.S = x(1);
 Param.R = 10;
 Param.T = 80;
 
-% Apply GARDENIA
+% Initialize HydroMod4 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

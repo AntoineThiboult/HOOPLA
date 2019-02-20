@@ -4,27 +4,26 @@ function [Qsim, param, varargout] = HydroMod4( P, E, param )
 %
 % GARDENIA hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the six model parameters (see "param" below) - [6,1]
+% param	= the six model parameters (see "param" below) - [6,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = GARDENIA's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod4's internal values (varargout 1)
+% interq  = HydroMod4's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = capacité du réservoir de surface
-% 	.x(2) = constante de percolations linéaires
-% 	.x(3) = paramètre de vidange latérale du réservoir sol
-% 	.x(4) = constante de vidange linéaire du réservoir souterrain
-% 	.x(5) = coefficient de correction des ETP
-% 	.x(6) = délai
+% 	.x(1) = surface reservoir capacity
+% 	.x(2) = linear percolation constant
+% 	.x(3) = lateral emptying parameter for soil reservoir
+% 	.x(4) = linear emptying constant for ground reservoir
+% 	.x(5) = PET correction coefficient
+% 	.x(6) = delay
 %
-% 	.S = Réservoir de surface (mm)
-% 	.R = Réservoir de sol (mm)
-% 	.T = Réservoir souterrain (mm)
+% 	.S = Surface reservoir state (mm)
+% 	.R = Soil reservoir state (mm)
+% 	.T = Ground reservoir state (mm)
 %
 % FOLLOWING
 %  - Thiery, D., 1982. Utilisation d’un modèle global pour identifier sur 

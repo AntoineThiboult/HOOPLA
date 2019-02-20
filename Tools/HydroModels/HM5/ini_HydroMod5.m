@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod5(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod5(Switches, Date, x)
 %
-% GR4H initialization, for details see associated GR4J.m file
+% HydroMod5 initialization, for details see associated HydroMod5.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -32,7 +32,7 @@ SH2       = real( SH2 ) ;
 Param.UH2 = diff( SH2 ) ;
 Param.H2  = zeros( size(Param.UH2) ) ;
 
-% Apply GR4J for all time steps
+% Initialize HydroMod5 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

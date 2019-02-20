@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod14(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod14(Switches, Date, x)
 %
-% SACRAMENTO initialization, for details see associated SACRAMENTO.m file
+% HydroMod14 initialization, for details see associated HydroMod14.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -30,7 +30,7 @@ Param.R = 100;
 Param.L = 0;
 Param.M = 0;
 
-% Apply SACRAMENTO
+% Initialize HydroMod14 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

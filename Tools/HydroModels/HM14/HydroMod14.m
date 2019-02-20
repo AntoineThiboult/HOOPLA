@@ -4,32 +4,31 @@ function [Qsim, param, varargout] = HydroMod14( P, E, param )
 %
 % SACRAMENTO hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the nine model parameters (see "param" below) - [9,1]
+% param = the nine model parameters (see "param" below) - [9,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = SACRAMENTO's internal values
+% Qsim  = simulated stream flow (mm)
+% inter   = HydroMod14's internal values (varargout 1)
+% interq  = HydroMod14's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = capacité uzfwm
-% 	.x(2) = capacité uztwm
-% 	.x(3) = constante de vidange du réservoir souterrain
-% 	.x(4) = coefficient de percolations
-% 	.x(5) = constante d’infiltration
-% 	.x(6) = constante de vidange du débit hypodermique
-% 	.x(7) = coefficient de partage pfree
-% 	.x(8) = coefficient de percolations profondes
-% 	.x(9) = délai
+% 	.x(1) = Rounting reservoir capacity
+% 	.x(2) = Ground reservoir capacity
+% 	.x(3) = Emptying constant of the ground reservoir
+% 	.x(4) = Percolation coefficient
+% 	.x(5) = Infiltration constant
+% 	.x(6) = Emptying constant of the hypodermic flow
+% 	.x(7) = Partitioning coefficient
+% 	.x(8) = Deep percolation coefficient
+% 	.x(9) = Delay
 %
-% 	.S = Réservoir d'interception (mm)
-% 	.T = Réservoir de vidange (mm)
-% 	.R = Réservoir souterrain soumis à l'évaporation (mm)
-% 	.L = Réservoir de routage souterrain (mm)
-% 	.M = Réservoir de routage direct (mm)
+% 	.S = Interception reservoir state (mm)
+% 	.T = Emptying reservoir state (mm)
+% 	.R = Ground reservoir state (mm)
+% 	.L = Ground routing reservoir state (mm)
+% 	.M = Direct routing reservoir (mm)
 %
 % FOLLOWING
 %  - Burnash, R.J.C., Ferral, R.L., McGuire, R.A., 1973. A generalized 

@@ -4,28 +4,27 @@ function [Qsim, param, varargout] = HydroMod8( P, E, param )
 %
 % IHACRES hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the seven model parameters (see "param" below) - [7,1]
+% param = the seven model parameters (see "param" below) - [7,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = IHACRES's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod8's internal values (varargout 1)
+% interq  = HydroMod8's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = Paramètre de forçage 1/C (calculée de sorte que le volume de pluie efficace calculé soit égal au volume des apports en eau observés sur la période de calage)
-% 	.x(2) = Paramètre de partage des écoulements
-% 	.x(3) = Constante de vidange du réservoir de routage rapide
-% 	.x(4) = Constante de vidange du réservoir de routage lent (X3.X4)
-% 	.x(5) = Délai
-% 	.x(6) = Paramètre f (facteur de modulation de la température)
-% 	.x(7) = Paramètre Tw (cste caractéristique de l'assèchement du bassin)
+% 	.x(1) = Forcing parameter 1/C (computed to ensure water balance over the whole period)
+% 	.x(2) = Flow distribution paramter
+% 	.x(3) = Emptying constant of the fast routing reservoir
+% 	.x(4) = Emptying constant of the slow routing reservoir (X3.X4)
+% 	.x(5) = Delay
+% 	.x(6) = f parameter (temperature modulation factor)
+% 	.x(7) = Tw parameter (characteristic watershed drying constant)
 %
-% 	.S = Réservoir de suivi de l'humidité (mm)
-% 	.T = Réservoir de routage lent (mm)
-% 	.R = Réservoir de routage rapide (mm)
+% 	.S = Soil moisture reservoir state (mm)
+% 	.T = Slow routing reservoir state (mm)
+% 	.R = Fast routing reservoir state (mm)
 %
 % FOLLOWING
 %  - Littlewood et al. (1997), The PC version of IHACRES for catchment-scale 

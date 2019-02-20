@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod8(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod8(Switches, Date, x)
 %
-% IHACRES initialization, for details see associated IHACRES.m file
+% HydroMod8 initialization, for details see associated HydroMod8.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -24,7 +24,7 @@ Param.S = 0.5;
 Param.T = 50;
 Param.R = 5;
 
-% Apply IHACRES for all time steps
+% Initialize HydroMod8 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

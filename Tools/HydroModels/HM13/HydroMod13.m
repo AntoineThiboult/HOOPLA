@@ -4,30 +4,29 @@ function [Qsim, param, varargout] = HydroMod13( P, E, param )
 %
 % PDM8 hydrological model (modified version)
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P 	= mean areal rainfall (mm)
 % E 	= mean areal evapotranspiration (mm)
-% Q 	= stream flow (mm)
-% x 	= the eight model parameters (see "param" below) - [8,1]
+% param	= the eight model parameters (see "param" below) - [8,1]
 %
 % OUTPUTS
-% Qs    = simulated stream flow (mm)
-% perf  = model performances
-% inter = PDM's internal values
+% Qsim    = simulated stream flow (mm)
+% inter   = HydroMod13's internal values (varargout 1)
+% interq  = HydroMod13's internal flow components (varargout 2)
 % param -->
-% 	.x(1) = capacité maximale du réservoir de production
-% 	.x(2) = Bexp
-% 	.x(3) = Alpha
-% 	.x(4) = délai
-% 	.x(5) = constante de vidange du réservoir souterrain
-% 	.x(6) = Rq constante de vidange des réservoirs de routage en série
-% 	.x(7) = Facteur de correction de la pluie
-% 	.x(8) = constante de drainage
+% 	.x(1) = Maximum capacity of production reservoir
+% 	.x(2) = Spatial variability coefficient of storage capacity (Bexp)
+% 	.x(3) = Drainage parameter (Alpha)
+% 	.x(4) = Delay
+% 	.x(5) = Emptying constant of the ground reservoir
+% 	.x(6) = Emptying constant of series routing reservoirs (Rq)
+% 	.x(7) = Rainfall correction factor
+% 	.x(8) = Drainage constant
 %
-% 	.S = Réservoir de sol (mm)
-% 	.T = Réservoir souterrain (mm)
-% 	.M = Réservoir de routage en série 1 (mm)
-% 	.N = Réservoir de routage en série 2 (mm)
+% 	.S = Soil reservoir state (mm)
+% 	.T = Ground reservoir state (mm)
+% 	.M = Routing reservoir in series 1 (mm)
+% 	.N = Routing reservoir in series 2 (mm)
 %
 % FOLLOWING
 %  - Moore, R.J., Clarke, R.T., 1981. A distribution function approach to 

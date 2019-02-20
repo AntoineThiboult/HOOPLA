@@ -2,7 +2,7 @@ function [Result, Param] = ini_HydroMod9(Switches, Date, x)
 %
 % [Result, Param] = ini_HydroMod9(Switches, Date, x)
 %
-% MARTINE initialization, for details see associated MARTINE.m file
+% HydroMod9 initialization, for details see associated HydroMod9.m file
 %
 % Programmed by G. Seiller, Univ. Laval (05-2013)
 % Slightly modified by A. Thiboult (2016)
@@ -25,7 +25,7 @@ Param.T = x(2)*0.5 ;
 Param.L = 5 ;
 Param.R = x(3)*0.1 ;
 
-% Apply MARTINE for all time steps
+% Initialize HydroMod9 for all time steps
 %
 lP    = length( Date ) ;
 Result.Qs    = zeros( lP,1 ) ;

@@ -4,16 +4,15 @@ function [Qsim, param, varargout] = HydroMod5( P, E, param )
 % 
 % GR4H hydrological model
 %
-% INPUTS (time series of daily observations [n,1])
+% INPUTS
 % P       = mean areal rainfall (mm)
 % E       = mean areal evapotranspiration (mm)
-% Q       = stream flow (mm)
-% x       = the four model parameters (see "param" below) - [4,1]
+% param   = the four model parameters (see "param" below) - [4,1]
 %
 % OUTPUTS
 % Qsim    = simulated stream flow (mm)
-% inter   = GR4J's internal values
-% interq  = GR4J's flow components
+% inter   = HydroMod5's internal values (varargout 1)
+% interq  = HydroMod5's internal flow components (varargout 2)
 % param -->
 %   .x(1) = maximum capacity of the production store (mm)
 %   .x(2) = groundwater exchange coefficient (mm)
