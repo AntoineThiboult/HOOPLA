@@ -27,7 +27,7 @@ addpath(genpath('Tools'));
 % Calibration / Simulation / Forecast
 Switches.calibration.on =0; % Run calibration
 Switches.simulation.on  =1; % Run simulation
-Switches.forecast.on    =0; % Run forcast
+Switches.forecast.on    =0; % Run forecast
 
 % Dates:format 'yyyy/mm/dd/HH:MM:SS' for 3h time step, 'yyyy/mm/dd' for 24h time step
 Switches.calStart   = '1997/01/01/03:00:00'; % Beginning of calibration period
