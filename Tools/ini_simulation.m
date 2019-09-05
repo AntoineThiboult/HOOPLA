@@ -61,7 +61,7 @@ if exist(fullfile('Results','Simulation',Switches.timeStep,...
             [Result, DataSim] = simulation(Switches, DataObs, DataPath, iC, iM, iE, iS);
         end
         if Switches.verb.on; dispstat(sprintf('Saving results...\n\n\n'),'keepprev');end
-        Result2=structfun(@single,Result,'UniformOutput', false);
+        Result=structfun(@single,Result,'UniformOutput', false);
         DataSim=structfun(@single,DataSim,'UniformOutput', false);
         save(fullfile('Results','Simulation',Switches.timeStep,sprintf('C%s_H%s_E%s_S%s.mat',Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS})),'Result','DataSim','Switches')
     end
