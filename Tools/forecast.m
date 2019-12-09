@@ -31,14 +31,14 @@ function [Result, DataSim, varargout] = forecast(Switches, DataSim, DataMetFcast
 %   DataWu = Data for warm up
 %
 %
-% Outputs: 
+% Outputs:
 %
 %   Results.
-%       Qfcast    = Streamflow forecast with a size of 
+%       Qfcast    = Streamflow forecast with a size of
 %                   - (nb of fcast issues, horizon, number of DA member) with data assimilation
 %                   - (nb of fcast issues, horizon) in open loop fashion
 %       Qs        = Simulated streamflow
-%       DateFcast = Date matrix      
+%       DateFcast = Date matrix
 %   DataSim.
 %       Date    = Simulated dates (yyyy/mm/dd/hh:mm:ss)
 %       Q       = Observed streamfow (matrix size: nDay x 1)
@@ -75,7 +75,7 @@ hydroModel=str2func(Switches.nameM{iM,1});                    % handle of the fu
 if Switches.petCompute.on == 1
     iniPetModel=str2func(strcat('ini_',Switches.nameE{iE}));    % handle of the function ini_PET iE
     petModel=str2func(Switches.nameE{iE});                      % handle of the function PET iE
-else 
+else
     iniPetModel = [];
     petModel = [];
 end
@@ -114,7 +114,7 @@ if Switches.DA.on == 1
 end
 
 %% Simulation
-if Switches.verb.on && ~Switches.parallelCompute.on;; dispstat('Beginning of the simulation...','keepprev'); dispstat('Simulation progress: 0%');end
+if Switches.verb.on && ~Switches.parallelCompute.on; dispstat('Beginning of the simulation...','keepprev'); dispstat('Simulation progress: 0%');end
 
 %% Simulation with Data Assimilation
 if Switches.DA.on == 1

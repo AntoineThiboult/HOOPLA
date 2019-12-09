@@ -24,11 +24,11 @@ function [Result, DataSim, varargout] = simulation(Switches, DataSim, DataPath, 
 %   DataWu = Data for warm up
 %
 %
-% Outputs: 
+% Outputs:
 %
 %   Results.
 %       Qs        = Simulated streamflow
-%       DateFcast = Date matrix      
+%       DateFcast = Date matrix
 %   DataSim.
 %       Date    = Simulated dates (yyyy/mm/dd/hh:mm:ss)
 %       Q       = Observed streamfow (matrix size: nDay x 1)
@@ -65,7 +65,7 @@ hydroModel=str2func(Switches.nameM{iM,1});                    % handle of the fu
 if Switches.petCompute.on == 1
     iniPetModel=str2func(strcat('ini_',Switches.nameE{iE}));    % handle of the function ini_PET iE
     petModel=str2func(Switches.nameE{iE});                      % handle of the function PET iE
-else 
+else
     iniPetModel = [];
     petModel = [];
 end

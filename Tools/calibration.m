@@ -58,7 +58,7 @@ hydroModel=str2func(Switches.nameM{iM,1});                    % handle of the fu
 if Switches.petCompute.on == 1
     iniPetModel=str2func(strcat('ini_',Switches.nameE{iE}));    % handle of the function ini_PET iE
     petModel=str2func(Switches.nameE{iE});                      % handle of the function PET iE
-else 
+else
     iniPetModel = [];
     petModel = [];
 end
@@ -98,7 +98,7 @@ userdata.hydroModel=hydroModel;
 if Switches.petCompute.on == 1
     userdata.iniPetModel=iniPetModel;
     userdata.petModel=petModel;
-else 
+else
     userdata.iniPetModel = [];
     userdata.petModel = [];
 end
@@ -115,9 +115,7 @@ userdata.DataCal=DataCal;
 if nargin == 8; userdata.DataWu=varargin{1}; end
 
 %% Calibration
-if Switches.verb.on;    
-    dispstat('Beginning of the calibration...','keepprev');
-end
+if Switches.verb.on; dispstat('Beginning of the calibration...','keepprev'); end
 
 switch Switches.calibration.method
     case 'DDS'

@@ -48,11 +48,11 @@ if exist(fullfile('Results','Calibration',Switches.timeStep,...
         elseif Switches.warmUpCompute.on==0
             [Result, DataCal, SarResult] = calibration(Switches, DataObs, DataPath, iC, iM, iE, iS);
         end
-        if Switches.verb.on; dispstat(sprintf('Saving results...\n\n\n'),'keepprev');end
         Result=structfun(@single,Result,'UniformOutput', false);
         DataCal=structfun(@single,DataCal,'UniformOutput', false);
         SarResult=structfun(@single,SarResult,'UniformOutput', false);
-        save(fullfile('Results','Calibration',Switches.timeStep,sprintf('C%s_H%s_E%s_S%s.mat',Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS})),'Result','DataCal','SarResult','Switches')
+        if Switches.verb.on; dispstat(sprintf('Saving results...\n\n\n'),'keepprev');end
+        save(fullfile('Results','Calibration',Switches.timeStep,sprintf('C%s_H%s_E%s_S%s.mat',Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS})),'Result','DataCal','SarResult','Switches','-v7.3')
         
     elseif Switches.snowmeltCompute.on == 0
         
@@ -61,13 +61,13 @@ if exist(fullfile('Results','Calibration',Switches.timeStep,...
         elseif Switches.warmUpCompute.on==0
             [Result, DataCal] = calibration(Switches, DataObs, DataPath, iC, iM, iE, iS);
         end
-        if Switches.verb.on; dispstat(sprintf('Saving results...\n\n\n'),'keepprev');end
         Result2=structfun(@single,Result,'UniformOutput', false);
         DataCal=structfun(@single,DataCal,'UniformOutput', false);
-        save(fullfile('Results','Calibration',Switches.timeStep,sprintf('C%s_H%s_E%s_S%s.mat',Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS})),'Result','DataCal','Switches')
+        if Switches.verb.on; dispstat(sprintf('Saving results...\n\n\n'),'keepprev');end
+        save(fullfile('Results','Calibration',Switches.timeStep,sprintf('C%s_H%s_E%s_S%s.mat',Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS})),'Result','DataCal','Switches','-v7.3')
     end
 else
-     dispstat(sprintf('Simulation for catchment %s, %s, %s, and %s already exist.\nConsider setting the "overwrite" switch to 1.',...
+    dispstat(sprintf('Simulation for catchment %s, %s, %s, and %s already exist.\nConsider setting the "overwrite" switch to 1.',...
         Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS}),'keepprev');
 end
 

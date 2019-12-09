@@ -47,11 +47,11 @@ if exist(fullfile('Results','Simulation',Switches.timeStep,...
         elseif Switches.warmUpCompute.on==0
             [Result, DataSim, SarResult] = simulation(Switches, DataObs, DataPath, iC, iM, iE, iS);
         end
-        if Switches.verb.on; dispstat(sprintf('Saving results...\n\n\n'),'keepprev');end
         Result=structfun(@single,Result,'UniformOutput', false);
         DataSim=structfun(@single,DataSim,'UniformOutput', false);
         SarResult=structfun(@single,SarResult,'UniformOutput', false);
-        save(fullfile('Results','Simulation',Switches.timeStep,sprintf('C%s_H%s_E%s_S%s.mat',Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS})),'Result','DataSim','SarResult','Switches')
+        if Switches.verb.on; dispstat(sprintf('Saving results...\n\n\n'),'keepprev');end
+        save(fullfile('Results','Simulation',Switches.timeStep,sprintf('C%s_H%s_E%s_S%s.mat',Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS})),'Result','DataSim','SarResult','Switches','-v7.3')
         
     elseif Switches.snowmeltCompute.on == 0
         
@@ -60,10 +60,10 @@ if exist(fullfile('Results','Simulation',Switches.timeStep,...
         elseif Switches.warmUpCompute.on==0
             [Result, DataSim] = simulation(Switches, DataObs, DataPath, iC, iM, iE, iS);
         end
-        if Switches.verb.on; dispstat(sprintf('Saving results...\n\n\n'),'keepprev');end
         Result=structfun(@single,Result,'UniformOutput', false);
         DataSim=structfun(@single,DataSim,'UniformOutput', false);
-        save(fullfile('Results','Simulation',Switches.timeStep,sprintf('C%s_H%s_E%s_S%s.mat',Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS})),'Result','DataSim','Switches')
+        if Switches.verb.on; dispstat(sprintf('Saving results...\n\n\n'),'keepprev');end
+        save(fullfile('Results','Simulation',Switches.timeStep,sprintf('C%s_H%s_E%s_S%s.mat',Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS})),'Result','DataSim','Switches','-v7.3')
     end
 else
     dispstat(sprintf('Simulation for catchment %s, %s, %s, and %s already exist.\nConsider setting the "overwrite" switch to 1.',...

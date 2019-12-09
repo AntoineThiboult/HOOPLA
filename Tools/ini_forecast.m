@@ -14,6 +14,8 @@ function ini_forecast(Switches, iC, iM, iE, iS)
 % Programmed by A. Thiboult (2016)
 
 %#ok<*NASGU>
+%#ok<*STRNU>
+
 if ~exist(fullfile('Results','Forecast',Switches.timeStep),'dir')
     mkdir(fullfile('Results','Forecast',Switches.timeStep));
 end
@@ -73,15 +75,15 @@ if exist(fullfile('Results','Forecast',Switches.timeStep,...
         
         %% Initialization of Result matrices for MEPS
         % Data Pre-check
-%         if Switches.forecast.perfectFcast.on == 1
-%             error('%s%s','Perfect forecast and ensemble meteorological forcing are incompatible. ',...
-%                 'It would be highly inefficient to run several times the exact same meteorological forecast. ',...
-%                 'Consider disabling either the perfect forecast switch or the meteorological ensemble forecast switch')
-%         end
+        %         if Switches.forecast.perfectFcast.on == 1
+        %             error('%s%s','Perfect forecast and ensemble meteorological forcing are incompatible. ',...
+        %                 'It would be highly inefficient to run several times the exact same meteorological forecast. ',...
+        %                 'Consider disabling either the perfect forecast switch or the meteorological ensemble forecast switch')
+        %         end
         metFile = matfile(fullfile('Data',Switches.timeStep,'Ens_met_fcast',sprintf('Met_fcast_%s.mat',Switches.nameC{iC})));
         nbMetMb       = numel(metFile.Met_fcast);
-        if nbMetMb == 0; 
-            error('No meteorological ensemble forecast for catchment %s', Switches.nameC{iC}); 
+        if nbMetMb == 0
+            error('No meteorological ensemble forecast for catchment %s', Switches.nameC{iC});
         end
         
         % Preallocation
@@ -121,32 +123,30 @@ if exist(fullfile('Results','Forecast',Switches.timeStep,...
                 elseif Switches.warmUpCompute.on==0
                     [iMetMbResult, iMetMbDataFcast, iMetMbSarResult] = forecast(Switches, DataObs, DataMetFcast , DataPath, iC, iM, iE, iS);
                 end
-                if Switches.verb.on; dispstat(sprintf('Saving results...\n\n\n'),'keepprev');end
                 Result.Qfcast(iMetMb,:,:,:)   = iMetMbResult.Qfcast;
                 Result.Qs(iMetMb,:,:)         = iMetMbResult.Qs;
                 SarResult.runoffD(iMetMb,:,:)  = iMetMbSarResult.runoffD;
                 
             elseif Switches.snowmeltCompute.on == 0
-                
                 if Switches.warmUpCompute.on==1
                     [iMetMbResult, iMetMbDataFcast] = forecast(Switches, DataObs, DataMetFcast, DataPath, iC, iM, iE, iS, DataWu);
                 elseif Switches.warmUpCompute.on==0
                     [iMetMbResult, iMetMbDataFcast] = forecast(Switches, DataObs, DataMetFcast, DataPath, iC, iM, iE, iS);
                 end
-                if Switches.verb.on; dispstat(sprintf('Saving results...\n\n\n'),'keepprev');end
                 Result.Qfcast(iMetMb,:,:,:)   = iMetMbResult.Qfcast;
                 Result.Qs(iMetMb,:,:)         = iMetMbResult.Qs;
             end
         end
         
         %% Save results
-        DataFcast = iMetMbDataFcast;
+        DataFcast=iMetMbDataFcast;
         DataFcast=structfun(@single,DataFcast,'UniformOutput', false);
         Result.DateFcast=iMetMbResult.DateFcast;
+        if Switches.verb.on; dispstat(sprintf('Saving results...\n\n\n'),'keepprev');end
         if Switches.snowmeltCompute.on == 1
-            save(fullfile('Results','Forecast',Switches.timeStep,sprintf('C%s_H%s_E%s_S%s.mat',Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS})),'Result','DataFcast','SarResult','Switches')
+            save(fullfile('Results','Forecast',Switches.timeStep,sprintf('C%s_H%s_E%s_S%s.mat',Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS})),'Result','DataFcast','SarResult','Switches','-v7.3')
         elseif Switches.snowmeltCompute.on == 0
-            save(fullfile('Results','Forecast',Switches.timeStep,sprintf('C%s_H%s_E%s_S%s.mat',Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS})),'Result','DataFcast','Switches')
+            save(fullfile('Results','Forecast',Switches.timeStep,sprintf('C%s_H%s_E%s_S%s.mat',Switches.nameC{iC},Switches.nameM{iM,1},Switches.nameE{iE},Switches.nameS{iS})),'Result','DataFcast','Switches','-v7.3')
         end
         
     end
