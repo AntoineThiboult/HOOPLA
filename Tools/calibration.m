@@ -75,14 +75,20 @@ end
 % Parameter boundaries
 modelParamBound=load(DataPath.modelParamBound);
 snowModelParamBound=load(DataPath.snowModelParamBound);
-if Switches.calibration.snowCal.on == 1
-    S_min=[modelParamBound.(Switches.nameM{iM,1}).sMin, snowModelParamBound.(Switches.nameS{iS}).sMin];
-    S_ini=[modelParamBound.(Switches.nameM{iM,1}).sIni, snowModelParamBound.(Switches.nameS{iS}).sIni];
-    S_max=[modelParamBound.(Switches.nameM{iM,1}).sMax, snowModelParamBound.(Switches.nameS{iS}).sMax];
-elseif Switches.calibration.snowCal.on == 0
-    S_min=[modelParamBound.(Switches.nameM{iM,1}).sMin, snowModelParamBound.(Switches.nameS{iS}).default];
-    S_ini=[modelParamBound.(Switches.nameM{iM,1}).sIni, snowModelParamBound.(Switches.nameS{iS}).default];
-    S_max=[modelParamBound.(Switches.nameM{iM,1}).sMax, snowModelParamBound.(Switches.nameS{iS}).default];
+if Switches.snowmeltCompute.on == 1
+    if Switches.calibration.snowCal.on == 1
+        S_min=[modelParamBound.(Switches.nameM{iM,1}).sMin, snowModelParamBound.(Switches.nameS{iS}).sMin];
+        S_ini=[modelParamBound.(Switches.nameM{iM,1}).sIni, snowModelParamBound.(Switches.nameS{iS}).sIni];
+        S_max=[modelParamBound.(Switches.nameM{iM,1}).sMax, snowModelParamBound.(Switches.nameS{iS}).sMax];
+    elseif Switches.calibration.snowCal.on == 0
+        S_min=[modelParamBound.(Switches.nameM{iM,1}).sMin, snowModelParamBound.(Switches.nameS{iS}).default];
+        S_ini=[modelParamBound.(Switches.nameM{iM,1}).sIni, snowModelParamBound.(Switches.nameS{iS}).default];
+        S_max=[modelParamBound.(Switches.nameM{iM,1}).sMax, snowModelParamBound.(Switches.nameS{iS}).default];
+    end
+elseif Switches.snowmeltCompute.on == 0
+    S_min=modelParamBound.(Switches.nameM{iM,1}).sMin;
+    S_ini=modelParamBound.(Switches.nameM{iM,1}).sIni;
+    S_max=modelParamBound.(Switches.nameM{iM,1}).sMax;
 end
 
 % Scores for the objective function
