@@ -112,7 +112,7 @@ for it = 1:MaxIt
     
     % Show Iteration Information
     fprintf('Iteration %i : Best Cost = %0.4f\n',...
-        it, abs(userdata.orientScore(userdata.idScore)-BestCosts(it)));
+        it, userdata.orientScore(userdata.idScore)-BestCosts(it));
     
     % Check for cost convergency
     if it > kStep
