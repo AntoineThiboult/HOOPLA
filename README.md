@@ -15,4 +15,4 @@ This project is licensed under the BSD 2-Clause License - see the licence.txt fi
 Antoine Thiboult, Gregory Seiller, François Anctil. 
 
 ## Contact
-You can contact us at hoopla@gci.ulaval.ca
+You can contact us at hoopla@fsg.ulaval.ca
