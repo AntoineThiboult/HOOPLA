@@ -168,9 +168,9 @@ if Switches.DA.on == 1
     %% Run simulation
     if Switches.snowmeltCompute.on == 1
         %% With snow accounting
-        for t = 1 : length(DataSim.Date)
+        for t = 1 : size(DataSim.Date,1)
             
-            if Switches.verb.on && ~mod(t,floor(length(DataSim.Date)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/length(DataSim.Date)))); end
+            if Switches.verb.on && ~mod(t,floor(size(DataSim.Date,1)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/size(DataSim.Date,1)))); end
             
             for imDA=1:Switches.DA.N
                 [SarResult.runoffD(t,imDA), SarParam(imDA)] = ...
@@ -229,9 +229,9 @@ if Switches.DA.on == 1
         
     elseif Switches.snowmeltCompute.on == 0
         %% No Snow accounting
-        for t = 1 : length(DataSim.Date)
+        for t = 1 : size(DataSim.Date,1)
             
-            if Switches.verb.on && ~mod(t,floor(length(DataSim.Date)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/length(DataSim.Date)))); end
+            if Switches.verb.on && ~mod(t,floor(size(DataSim.Date,1)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/size(DataSim.Date,1)))); end
             
             for imDA=1:Switches.DA.N
                 [Result.Qs(t,imDA), Param(imDA)] = ...
@@ -316,9 +316,9 @@ if Switches.DA.on == 0
     %% Run simulation
     if Switches.snowmeltCompute.on == 1
         %% With snow accounting
-        for t = 1 : length(DataSim.Date)
+        for t = 1 : size(DataSim.Date,1)
             
-            if Switches.verb.on && ~mod(t,floor(length(DataSim.Date)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/length(DataSim.Date)))); end
+            if Switches.verb.on && ~mod(t,floor(size(DataSim.Date,1)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/size(DataSim.Date,1)))); end
             
             [SarResult.runoffD(t), SarParam] = ...
                 sarModel(DataSim.Pt(t), DataSim.T(t), DataSim.Tmax(t),...
@@ -358,9 +358,9 @@ if Switches.DA.on == 0
         
     elseif Switches.snowmeltCompute.on == 0
         %% No Snow accounting
-        for t = 1 : length(DataSim.Date)
+        for t = 1 : size(DataSim.Date,1)
             
-            if Switches.verb.on && ~mod(t,floor(length(DataSim.Date)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/length(DataSim.Date)))); end
+            if Switches.verb.on && ~mod(t,floor(size(DataSim.Date,1)/20)) && ~Switches.parallelCompute.on; dispstat(sprintf('Simulation progress: %d %%',round(100*t/size(DataSim.Date,1)))); end
             
             [Result.Qs(t,1),Param] = hydroModel(DataSim.Pt(t), DataSim.E(t), Param);
             
@@ -387,4 +387,4 @@ if Switches.DA.on == 0
         end
     end
 end
-Result.DateFcast = repmat(datenum(DataMetFcast.Date),[1, numel(DataMetFcast.leadTime)]) + repmat(DataMetFcast.leadTime,[length(DataMetFcast.Date),1]);
+Result.DateFcast = repmat(datenum(DataMetFcast.Date),[1, numel(DataMetFcast.leadTime)]) + repmat(DataMetFcast.leadTime,[size(DataMetFcast.Date,1),1]);
