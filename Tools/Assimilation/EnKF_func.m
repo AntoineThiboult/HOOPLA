@@ -38,7 +38,7 @@ z=Qs*ones(N,1);
 % EnKF computation
 HA=Qs-1/N*z*ones(1,N);
 Y=Qrp-Qs;
-L=eQ*eQ'/N;
+L=eQ*eQ'/(N-1);
 P=L+1/(N-1)*HA*(HA)';
 M=P^-1*Y;
 Z=HA'*M;
