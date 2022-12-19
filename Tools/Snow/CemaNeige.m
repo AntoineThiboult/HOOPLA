@@ -12,7 +12,7 @@ function [runoffD, SarParam, varargout] = CemaNeige( Pt, T, Tmax, Tmin, Date, Sa
 %   Date = yyyy / mm / dd / hh : mm: ss (1x6 matrix)
 %   SarParam.
 %       CTg = snow cover thermal coefficient (calibrated paramter)
-%       Kf  = snowmelt factor (mm/°C) (calibrated paramter)
+%       Kf  = snowmelt factor (mm / °C * pdt) (calibrated paramter)
 %       G   = snow stock
 %       eTg = snow cover thermal state
 %       Zz  = catchment elevation quantiles (m)
@@ -46,7 +46,7 @@ function [runoffD, SarParam, varargout] = CemaNeige( Pt, T, Tmax, Tmin, Date, Sa
 % 
 % Coded by G. Seiller (2013)
 % Slightly modified by A. Thiboult (2017)
-
+% Modified by S.Lachance-Cloutier (2022)
 %% CemaNeige running
 
 % Variables
@@ -78,10 +78,11 @@ theta = gradT(jd+1);
 Tz = T + theta*(Zz - ZmedBV)./100;
 Tzmax = Tmax+theta*(Zz-ZmedBV)./100;
 Tzmin = Tmin+theta*(Zz-ZmedBV)./100;
-Pdis = Pt/nbzalt; % Distribution of precipitation over the nbzalt bands
+
+% Distribution of precipitation over the nbzalt bands
 modc = exp(Beta*(Zz-ZmedBV));
 c = sum(modc)/nbzalt;
-Pz = (1/c)*Pdis(1)*exp(Beta*(Zz-ZmedBV));
+Pz = (1/c)*Pt(1)*exp(Beta*(Zz-ZmedBV));
 
 % Snow franction
 Fracneige = zeros(1,nbzalt);
@@ -135,7 +136,7 @@ snowMelt = Fpot .* ((1-Vmin)*fnts+Vmin);
 G = G - snowMelt;
 
 % Depth total of runoff (sent to the hydrological model)
-runoffD = sum(Pl) + sum(snowMelt);
+runoffD = (sum(Pl) + sum(snowMelt))/nbzalt;
 
 % Snowpack state saving
 SarParam.G = G;
